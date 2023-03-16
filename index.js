@@ -12,6 +12,7 @@ const port = setting.port;
 let running = false;
 const server = http.createServer(async (req, res) => {
   console.log(req.url);
+  console.log(req.url);
   console.log(req.method);
   req.on('data', chunk => {
     console.log(`Data chunk available: ${chunk}`)
