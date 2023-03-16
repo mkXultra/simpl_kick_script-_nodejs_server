@@ -13,7 +13,6 @@ let running = false;
 const server = http.createServer(async (req, res) => {
   console.log(req.url);
   console.log(req.method);
-  console.log(req.method);
   if (req.method === 'POST') {
     const body = await getJsonBody(req)
     body.ref
