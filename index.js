@@ -12,6 +12,13 @@ const port = setting.port;
 let running = false;
 const server = http.createServer(async (req, res) => {
   console.log(req.url);
+  console.log(req.method);
+  req.on('data', chunk => {
+    console.log(`Data chunk available: ${chunk}`)
+  })
+  req.on('end', () => {
+    //end of data
+  })
   if (req.url === '/execute') {
     res.setHeader('Content-Type', 'text/plain');
     if (running) {
