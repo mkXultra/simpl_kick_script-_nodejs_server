@@ -1,6 +1,7 @@
 {
   "executeScript": "./test.sh",
   "healthCheckScript": "./test.sh",
+  "resetScript": "./test.sh",
   "host": "127.0.0.1",
   "port": "3030"
 }

@@ -29,6 +29,20 @@ const server = http.createServer(async (req, res) => {
     res.statusCode = 200;
     const cpRes = await executeProcess(setting.healthCheckScript)
     res.end(cpRes.data);
+  } else if (req.url === '/reset') {
+    res.setHeader('Content-Type', 'text/plain');
+    if (running) {
+      console.log('already resetting');
+      res.statusCode = 503;
+      res.end('already resetting');
+      return;
+    }
+    running = true;
+    res.statusCode = 200;
+    res.end('resetting');
+    await executeProcess(setting.resetScript)
+    running = false;
+
   } else{
     res.setHeader('Content-Type', 'text/plain');
     res.statusCode = 404;
