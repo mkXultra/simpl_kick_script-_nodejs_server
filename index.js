@@ -18,8 +18,11 @@ const server = http.createServer(async (req, res) => {
     body.ref
     const excludedStr = 'refs/heads/';
     const branchName = body.ref.replace(new RegExp(excludedStr, ''), ''); // 'Hell Wrld!'
+    console.log("🚀 ~ file: index.js:21 ~ server ~ branchName:", branchName)
     if  (branchName === setting.targetBranch) {
       await executeFunc(res,req)
+    }else{
+      console.log("skipped");
     }
   }else{
     await normalFlow(res,req)
