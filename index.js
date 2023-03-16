@@ -13,9 +13,10 @@ let running = false;
 const server = http.createServer(async (req, res) => {
   console.log(req.url);
   console.log(req.method);
+  console.log(req.method);
   let chunkData = '';
   req.on('data', chunk => {
-    console.log(`Data chunk available: ${chunk}`)
+    // console.log(`Data chunk available: ${chunk}`)
     chunkData += chunk;
   })
   req.on('end', () => {
