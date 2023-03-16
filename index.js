@@ -14,11 +14,15 @@ const server = http.createServer(async (req, res) => {
   console.log(req.url);
   console.log(req.url);
   console.log(req.method);
+  let chunkData = '';
   req.on('data', chunk => {
     console.log(`Data chunk available: ${chunk}`)
+    chunkData += chunk;
   })
   req.on('end', () => {
     //end of data
+    let req = JSON.parse(chunkData)
+    console.log("🚀 ~ file: index.js:25 ~ req.on ~ req:", req)
   })
   if (req.url === '/execute') {
     res.setHeader('Content-Type', 'text/plain');
