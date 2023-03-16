@@ -15,7 +15,7 @@ const server = http.createServer(async (req, res) => {
   console.log(req.method);
   let chunkData = '';
   req.on('data', chunk => {
-    console.log(`Data chunk available: ${chunk}`)
+    // console.log(`Data chunk available: ${chunk}`)
     chunkData += chunk;
   })
   req.on('end', () => {
