@@ -7,6 +7,8 @@ const setting = JSON.parse(settingJson)
 const hostname = setting.host;
 const port = setting.port;
 
+// test
+
 let running = false;
 const server = http.createServer(async (req, res) => {
   console.log(req.url);
