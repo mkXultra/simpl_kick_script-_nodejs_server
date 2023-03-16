@@ -43,7 +43,7 @@ server.listen(port, hostname, () => {
 function executeProcess(executeFile) {
   return new Promise((resolve, reject) => {
     console.log('executeProcess');
-    const cp = spawn('bash', [executeFile]);
+    const cp = spawn('bash', [executeFile], { env: process.env});
     let chunk = '';
     cp.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
