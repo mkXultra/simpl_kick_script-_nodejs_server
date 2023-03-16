@@ -21,12 +21,12 @@ const server = http.createServer(async (req, res) => {
     const branchName = body.ref.replace(new RegExp(excludedStr, ''), ''); // 'Hell Wrld!'
     console.log("🚀 ~ file: index.js:21 ~ server ~ branchName:", branchName)
     if  (branchName === setting.targetBranch) {
-      await executeFunc(res,req)
+      await executeFunc(req,res)
     }else{
       console.log("skipped");
     }
   }else{
-    await normalFlow(res,req)
+    await normalFlow(req,res)
   }
 
 });
@@ -35,7 +35,7 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-async function normalFlow(res,req){
+async function normalFlow(req, res){
   if (req.url === '/execute') {
     await executeFunc(req, res)
   } else if(req.url === '/version') {
