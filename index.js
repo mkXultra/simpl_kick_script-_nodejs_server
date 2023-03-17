@@ -15,9 +15,8 @@ const server = http.createServer(async (req, res) => {
   console.log(req.method);
   if (req.method === 'POST') {
     const body = await getJsonBody(req)
-    body.ref
     const excludedStr = 'refs/heads/';
-    const branchName = body.ref.replace(new RegExp(excludedStr, ''), ''); // 'Hell Wrld!'
+    const branchName = body.ref.replace(new RegExp(excludedStr, ''), '');
     console.log("🚀 ~ file: index.js:21 ~ server ~ branchName:", branchName)
     if  (branchName === setting.targetBranch) {
       await executeFunc(req,res)
@@ -55,6 +54,10 @@ function executeProcess(executeFile) {
     let chunk = '';
     cp.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
+      chunk += data;
+    });
+    cp.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
       chunk += data;
     });
     cp.on('error', (err) => {
