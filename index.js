@@ -16,6 +16,12 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'POST') {
     const body = await getJsonBody(req)
     const excludedStr = 'refs/heads/';
+    // hook check request
+    if (body.ref === undefined) {
+      res.statusCode = 200;
+      res.end('ok');
+      return
+    }
     const branchName = body.ref.replace(new RegExp(excludedStr, ''), '');
     console.log("🚀 ~ file: index.js:21 ~ server ~ branchName:", branchName)
     if  (branchName === setting.targetBranch) {
