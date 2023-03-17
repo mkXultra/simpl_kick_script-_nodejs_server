@@ -28,6 +28,9 @@ const server = http.createServer(async (req, res) => {
       await executeFunc(req,res)
     }else{
       console.log("skipped");
+      res.statusCode = 200;
+      res.end('ok');
+      return
     }
   }else{
     await normalFlow(req,res)
