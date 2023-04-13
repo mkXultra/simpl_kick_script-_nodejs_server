@@ -16,7 +16,7 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'POST') {
     const body = await getJsonBody(req)
     const excludedStr = 'refs/heads/';
-    // hook check request
+    // github hook check request
     if (body.ref === undefined) {
       res.statusCode = 200;
       res.end('ok');
@@ -49,6 +49,15 @@ async function normalFlow(req, res){
     await checkFunc(req, res)
   } else if (req.url === '/reset') {
     await resetFunc(req, res)
+  } else if (req.url.includes('/custom-')) {
+    const actionName = req.url.replace( '/custom-', '')
+    if (setting.custom === undefined| setting.custom[actionName] === undefined) {
+      res.setHeader('Content-Type', 'text/plain');
+      res.statusCode = 404;
+      res.end('404 Not Found');
+      return
+    }
+    res = await executeManualFunc(res, setting.custom[actionName])
   } else{
     res.setHeader('Content-Type', 'text/plain');
     res.statusCode = 404;
@@ -117,6 +126,22 @@ async function executeFunc(req, res){
   res.end('execute');
   await executeProcess(setting.executeScript)
   running = false;
+}
+
+async function executeManualFunc(res, scriptFile){
+  res.setHeader('Content-Type', 'text/plain');
+  if (running) {
+    console.log('already running');
+    res.statusCode = 503;
+    res.end('already running');
+    return;
+  }
+  running = true;
+  res.statusCode = 200;
+  res.end('execute');
+  await executeProcess(scriptFile)
+  running = false;
+  return res
 }
 
 async function checkFunc(req, res){
