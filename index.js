@@ -136,10 +136,10 @@ async function executeManualFunc(res, scriptFile){
     res.end('already running');
     return;
   }
+  await executeProcess(scriptFile)
   running = true;
   res.statusCode = 200;
   res.end('execute');
-  await executeProcess(scriptFile)
   running = false;
   return res
 }
